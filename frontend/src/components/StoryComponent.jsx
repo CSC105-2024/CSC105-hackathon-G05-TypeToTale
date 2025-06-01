@@ -32,7 +32,7 @@ export default function StoryTypingChallenge() {
 
     if (validParas.length !== invalidParas.length) {
       console.warn(
-        `Paragraph count mismatch: Valid(${validParas.length}) vs Invalid(${invalidParas.length})`
+        `Paragraph count mismatch: Valid(${validParas.length}) vs Invalid(${invalidParas.length})`,
       );
     }
 
@@ -56,7 +56,7 @@ export default function StoryTypingChallenge() {
 
         // Call your backend API
         const response = await axiosInstance.get(
-          `/secure/typing-session/${id}`
+          `/secure/typing-session/${id}`,
         );
         console.log("Typing session response:", response.data.book);
 
@@ -71,7 +71,7 @@ export default function StoryTypingChallenge() {
           // Validate and sync paragraph pairs
           const { valid, invalid } = validateParagraphPairs(
             validParas,
-            invalidParas
+            invalidParas,
           );
 
           setValidParagraphs(valid);
@@ -194,10 +194,10 @@ export default function StoryTypingChallenge() {
   // Progress calculation
   const getProgress = () => {
     if (validParagraphs.length === 0) return 0;
-    return Math.round(
-      ((currentIndex + (userInput.length > 0 ? 0.5 : 0)) /
+    return Math.ceil(
+      ((currentIndex + (userInput.length > 0 ? 1 : 0)) /
         validParagraphs.length) *
-        100
+      100,
     );
   };
 
@@ -412,9 +412,8 @@ export default function StoryTypingChallenge() {
                 <div className="flex items-center justify-between">
                   <h3 className="text-xl font-bold text-slate-800 flex items-center space-x-2">
                     <span
-                      className={`w-3 h-3 rounded-full ${
-                        showSuccess ? "bg-green-500" : "bg-blue-500"
-                      }`}
+                      className={`w-3 h-3 rounded-full ${showSuccess ? "bg-green-500" : "bg-blue-500"
+                        }`}
                     ></span>
                     <span>Your Corrected Version</span>
                   </h3>
@@ -431,13 +430,12 @@ export default function StoryTypingChallenge() {
                     value={userInput}
                     onChange={handleChange}
                     placeholder="Type the corrected paragraph here..."
-                    className={`w-full h-[300px] p-8 text-lg text-slate-800 bg-gradient-to-br border-2 rounded-2xl focus:outline-none resize-none transition-all duration-300 font-medium leading-relaxed ${
-                      showSuccess
+                    className={`w-full h-[300px] p-8 text-lg text-slate-800 bg-gradient-to-br border-2 rounded-2xl focus:outline-none resize-none transition-all duration-300 font-medium leading-relaxed ${showSuccess
                         ? "from-green-50 to-green-100 border-green-400 shadow-green-200 shadow-lg"
                         : matchPercentage >= 80
-                        ? "from-blue-50 to-blue-100 border-blue-400 shadow-blue-200 shadow-lg"
-                        : "from-slate-50 to-slate-100 border-slate-300 focus:border-[#5C5E81] focus:shadow-indigo-200 focus:shadow-lg hover:border-slate-400"
-                    }`}
+                          ? "from-blue-50 to-blue-100 border-blue-400 shadow-blue-200 shadow-lg"
+                          : "from-slate-50 to-slate-100 border-slate-300 focus:border-[#5C5E81] focus:shadow-indigo-200 focus:shadow-lg hover:border-slate-400"
+                      }`}
                     disabled={isCompleted}
                   />
 
@@ -445,13 +443,12 @@ export default function StoryTypingChallenge() {
                   <div className="absolute bottom-4 right-4 flex items-center space-x-3">
                     <div className="flex items-center space-x-2 bg-white/80 backdrop-blur-sm rounded-full px-3 py-1">
                       <div
-                        className={`w-3 h-3 rounded-full animate-pulse ${
-                          matchPercentage >= 90
+                        className={`w-3 h-3 rounded-full animate-pulse ${matchPercentage >= 90
                             ? "bg-green-500"
                             : matchPercentage >= 70
-                            ? "bg-yellow-500"
-                            : "bg-red-500"
-                        }`}
+                              ? "bg-yellow-500"
+                              : "bg-red-500"
+                          }`}
                       ></div>
                       <span className="text-sm font-medium text-slate-600">
                         {userInput.length} chars

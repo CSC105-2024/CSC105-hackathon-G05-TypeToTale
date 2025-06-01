@@ -20,7 +20,7 @@ async function geminiMakeInvalidStory(validStory: string) {
   console.log(API_KEY);
   const response = await ai.models.generateContent({
     model: "gemini-2.0-flash",
-    contents: `can you make some 4 spelling errors from this sentence to each paragraph then return it to me?( I want only the story I don't want any introduction or ending words, just the story itself.): "${validStory}"`,
+    contents: `can you make some 4 spelling errors from this sentence to each paragraph then return it to me?  and make sure that you do not change any sentences make only spelling errors. ( I want only the story I don't want any introduction or ending words, just the story itself.): "${validStory}"`,
   });
   console.log(response.text);
   return response.text;
